@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js"></script>
+
+    <script src="firebase-config.js"></script>
+</head>
+<body>
+    
+    
+    <div id="allMessages"></div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const allMessagesDiv = document.getElementById("allMessages");
+
+            const database = firebase.database();
+
+            // Display all messages in real-time
+            database.ref("messages").on("value", (snapshot) => {
+                allMessagesDiv.innerHTML = ""; // Clear existing messages
+                snapshot.forEach((userSnapshot) => {
+                    userSnapshot.forEach((childSnapshot) => {
+                        const data = childSnapshot.val();
+                        const messageDiv = document.createElement("div");
+                        messageDiv.classList.add("message");
+                        messageDiv.innerHTML = `
+                            <p><strong>Name:</strong> ${data.name}</p>
+                            <p><strong>Subject:</strong> ${data.subject}</p>
+                            <p><strong>Message:</strong> ${data.message}</p>
+                            <p><small><strong>Date:</strong> ${new Date(data.timestamp).toLocaleString()}</small></p>
+                            <hr>
+                        `;
+                        allMessagesDiv.appendChild(messageDiv);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+        h1 {
+            color: #1e90ff;
+            margin-top: 20px;
+            font-size: 2.5em;
+            text-align: center;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .message hr {
+            margin-top: 10px;
+            border: 0;
+            border-top: 1px solid #ddd;
+        }
+        a {
+            color: #1e90ff;
+            text-decoration: none;
+            font-size: 1em;
+            margin-top: 20px;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Panel</h1>
+
+    <div class="container">
+        <h2>Messages</h2>
+        <div id="messagesContainer">
+            <!-- Messages will be dynamically populated here -->
+        </div>
+    </div>
+    <a href="index.html">Back to Home</a>
+</body>
+</html>

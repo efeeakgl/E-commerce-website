@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Firebase App (required) -->
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js"></script>
+
+    
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Management System</title>
+    <link rel="stylesheet" href="style.css">
+    
+<script>
+   
+</script>
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            color: #333;
+        }
+        h1 {
+            color: #1e90ff;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            text-align: center;
+        }
+        h2 {
+            color: #4682b4;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            text-align: center;
+        }
+        form {
+            background: #ffffff;
+            border: 1px solid #dcdcdc;
+            border-radius: 8px;
+            padding: 25px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        input[type="password"],
+        textarea,
+        select,
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #1e90ff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #4682b4;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+        }
+        li {
+            display: inline;
+            margin: 0 10px;
+        }
+        a {
+            color: #1e90ff;
+            text-decoration: none;
+            font-size: 1.2em;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>E-commerce Management System</h1>
+
+    <div class="container">
+        <!-- Add or Update Product Form -->
+        <h2>Add or Update Product</h2>
+        <form action="manage_product.php" method="POST">
+            <label for="pid">Product ID:</label>
+            <input type="text" id="pid" name="pid" required>
+
+            <label for="name">Product Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" step="0.01" required>
+
+            <label for="stock">Stock:</label>
+            <input type="number" id="stock" name="stock" required>
+
+            <button type="submit" name="submit_action" value="add">Add Product</button>
+            <button type="submit" name="submit_action" value="update">Update Product</button>
+        </form>
+
+        <!-- Add New Customer Form -->
+        <h2>Add New Customer</h2>
+        <form action="add_customer.php" method="POST">
+            <label for="cid">Customer ID:</label>
+            <input type="text" id="cid" name="cid" required>
+
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Add Customer</button>
+        </form>
+
+        <!-- Update Customer Information Form -->
+        <h2>Update Customer Information</h2>
+        <form action="update_customer.php" method="POST">
+            <label for="cid">Customer ID:</label>
+            <input type="text" id="cid" name="cid" required>
+
+            <label for="new_name">New Name:</label>
+            <input type="text" id="new_name" name="new_name">
+
+            <label for="new_email">New Email:</label>
+            <input type="email" id="new_email" name="new_email">
+
+            <button type="submit">Update Customer</button>
+        </form>
+
+        <!-- Place an Order Form -->
+        <h2>Place an Order</h2>
+        <form action="place_order.php" method="POST">
+            <label for="oid">Order ID:</label>
+            <input type="text" id="oid" name="oid" required>
+
+            <label for="customer_id">Customer ID:</label>
+            <input type="text" id="customer_id" name="customer_id" required>
+
+            <label for="product_id">Product ID:</label>
+            <input type="text" id="product_id" name="product_id" required>
+
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" required>
+
+            <button type="submit">Place Order</button>
+        </form>
+
+        <!-- Get Customer Order Report Form -->
+        <h2>Get Customer Order Report</h2>
+        <form action="customer_order_report.php" method="POST">
+            <label for="customer_id">Customer ID:</label>
+            <input type="text" id="customer_id" name="customer_id" required>
+            <button type="submit">Get Report</button>
+        </form>
+
+        <!-- Support Page -->
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Page</title>
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.16.0/firebase-database.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Support Page</h1>
+    <form action="send_message.php" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="subject">Subject:</label>
+        <select id="subject" name="subject" required>
+            <option value="Defected Product">Defected Product</option>
+            <option value="Late Order">Late Order</option>
+            <option value="Lost Product">Lost Product</option>
+            <option value="Suggestion">Suggestion</option>
+        </select>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" required></textarea>
+
+        <button type="submit">Send Message</button>
+    </form>
+    <div class="back-home">
+        <a href="index.html">Back to Home</a>
+    </div>
+    <script>
+         // Firebase configuration
+
+        const firebaseConfig = {
+        apiKey: "AIzaSyADGi0UYeJaLU1yWzOQMB6cqTIoFOiRCUg",
+        authDomain: "ecommerce-445d3.firebaseapp.com",
+        databaseURL: "https://ecommerce-445d3-default-rtdb.firebaseio.com",
+        projectId: "ecommerce-445d3",
+        storageBucket: "ecommerce-445d3.firebasestorage.app",
+        messagingSenderId: "1036297214298",
+        appId: "1:1036297214298:web:9a9432408c62d188753b63",
+        measurementId: "G-ECV49KGZXM"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const database = firebase.database();
+        const supportForm = document.getElementById('supportForm');
+        const messagesDiv = document.getElementById('messages');
+
+        const userId = sessionStorage.getItem('userId') || firebase.database().ref().push().key;
+        sessionStorage.setItem('userId', userId);
+
+        supportForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            const timestamp = new Date().toISOString();
+
+            const messageRef = database.ref('messages').push();
+            messageRef.set({
+                userId,
+                name,
+                subject,
+                message,
+                timestamp
+            });
+
+            supportForm.reset();
+        });
+
+        database.ref('messages').orderByChild('userId').equalTo(userId).on('value', (snapshot) => {
+            messagesDiv.innerHTML = '';
+            snapshot.forEach((childSnapshot) => {
+                const data = childSnapshot.val();
+                const messageDiv = document.createElement('div');
+                messageDiv.innerHTML = `
+                    <p><strong>Subject:</strong> ${data.subject}</p>
+                    <p><strong>Message:</strong> ${data.message}</p>
+                    <p><strong>Time:</strong> ${new Date(data.timestamp).toLocaleString()}</p>
+                    <hr>
+                `;
+                messagesDiv.appendChild(messageDiv);
+            });
+        });
+    </script>
+
+</body>
+</html>
+
+
+        <!-- Navigation Links -->
+        <h2>Navigation</h2>
+        <ul>
+            <li><a href="view_products.php">View All Products</a></li>
+            <li><a href="view_customers.php">View All Customers</a></li>
+            <li><a href="view_orders.php">View All Orders</a></li>
+            <li><a href="view_customer_logs.php">View Customer Logs</a></li>
+            
+            
+        </ul>
+    </div>
+</body>
+</html>
